@@ -4,7 +4,7 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
-const SYSTEM_PROMPT = `You are a supportive AI health therapist.
+const SYSTEM_PROMPT = `You are a supportive AI health therapist. You should only give answer to health related questions.
 Rules:
 - Do not diagnose or prescribe medication.
 - Provide emotional support and coping strategies.
@@ -16,7 +16,7 @@ export async function getAIReply(userMessage) {
   try {
     console.log("Getting AI reply for:", userMessage);
     console.log("Groq API Key exists:", !!process.env.GROQ_API_KEY);
-    
+
     const message = await groq.chat.completions.create({
       messages: [
         {
@@ -28,25 +28,25 @@ export async function getAIReply(userMessage) {
           content: userMessage,
         },
       ],
-      model: "llama-3.1-8b-instant",
+      model: "openai/gpt-oss-120b",
       max_tokens: 1024,
     });
 
     const text = message.choices[0]?.message?.content || "";
     console.log("Groq response:", text);
-    
+
     if (!text) {
       throw new Error("No response text from Groq API");
     }
-    
+
     return text;
   } catch (error) {
     console.error("Groq Error:", error.message);
     console.error("Full error:", error);
-    
+
     // Fallback response based on keywords
     const userMessageLower = userMessage.toLowerCase();
-    
+
     if (userMessageLower.includes("sad") || userMessageLower.includes("depressed") || userMessageLower.includes("mental peace")) {
       return "I hear you're struggling. These feelings are temporary. Try deep breathing or reaching out to someone. You're not alone.";
     } else if (userMessageLower.includes("anxious") || userMessageLower.includes("anxiety") || userMessageLower.includes("stress")) {

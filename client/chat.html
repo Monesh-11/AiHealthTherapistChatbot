@@ -3,16 +3,20 @@
 <head>
   <title>AI Health Therapist - Chat</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
   <div class="chat-container">
     <div class="chat-header">
       <h1>AI Health Therapist Chat</h1>
-      <button onclick="logout()" style="float: right;">Logout</button>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button onclick="toggleTheme()" class="theme-btn" style="background: none; border: none; font-size: 24px; box-shadow: none; padding: 0;">🌓</button>
+        <button onclick="logout()">Logout</button>
+      </div>
     </div>
     <div id="chat" class="chat-messages"></div>
     <div class="chat-input">
-      <input id="msg" type="text" placeholder="Type your message...">
+      <input id="msg" type="text" placeholder="Type your message..." onkeypress="if(event.key === 'Enter') send()">
       <button onclick="send()">Send</button>
     </div>
   </div>

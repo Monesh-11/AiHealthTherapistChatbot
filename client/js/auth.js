@@ -19,7 +19,7 @@ async function register() {
       return;
     }
     
-    errorEl.style.color = "green";
+    errorEl.style.color = "#4ade80";
     errorEl.textContent = "Registration successful! Now login.";
   } catch (error) {
     errorEl.textContent = "Error: " + error.message;
